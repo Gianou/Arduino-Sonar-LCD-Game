@@ -39,7 +39,7 @@ void LCD::drawScreen()
     }
 
     // Draw timeTracker
-    lcd.setCursor(5, 1);
+    lcd.setCursor(15, 0);
     lcd.print(timeTracker);
 }
 
@@ -74,7 +74,10 @@ void LCD::updateGameObjects()
         lcd.print("GAME OVER");
         lcd.setCursor(player->getX(), player->getY());
         lcd.print("X");
-        delay(1000);
+        delay(3000);
+        // reset
+        timeTracker = 0;
+        numGameObjects = 2;
     }
     else
     {

@@ -13,7 +13,7 @@
 
 Sonar mySonar(sonarTrigPin, sonarEchoPin, MAX_DISTANCE);
 LCD myLCD(address, col, line);
-Player player('0', 0, 3);
+Player player('}', 0, 3);
 Projectile projectile1('-', 19, 0, 1); // Example values, adjust as needed
 Projectile projectile2('-', 9, 2, 1);  // Example values, adjust as needed
 Projectile projectile3('-', 19, 1, 1); // Example values, adjust as needed
