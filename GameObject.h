@@ -9,22 +9,20 @@ const int MAX_GAME_OBJECTS = 10;
 class GameObject
 {
 public:
-    GameObject(char sprite, int x, int y, uint8_t id);
-    GameObject(char sprite, int x, int y, uint8_t id, bool isPlayer); // New constructor
-    GameObject();                                                     // Default constructor
+    GameObject(char sprite, int x, int y);
+    GameObject();
     char getSprite() const;
     int getX() const;
     int getY() const;
-    uint8_t getId() const;
-    bool getIsPlayer() const; // New method to get the isPlayer value
+    void setSprite(char newSprite);
+    void setX(int newX);
+    void setY(int newY);
     virtual void update();
 
-public:
+private:
     char sprite;
     int x;
     int y;
-    uint8_t id;
-    bool isPlayer; // New property
 };
 
 #endif

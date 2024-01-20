@@ -1,7 +1,7 @@
 #include "Player.h"
 float Player::globalDistance = 0.0;
 
-Player::Player(char sprite, int x, int y, uint8_t id) : GameObject(sprite, x, y, id, true) {}
+Player::Player(char sprite, int x, int y) : GameObject(sprite, x, y) {}
 
 void Player::update()
 {
@@ -13,19 +13,19 @@ void Player::update()
 
     if (globalDistance < max / 4)
     {
-        y = 3;
+        setY(3);
     }
     else if (globalDistance < max / 2)
     {
-        y = 2;
+        setY(2);
     }
     else if (globalDistance < max / 4 * 3)
     {
-        y = 1;
+        setY(1);
     }
     else if (globalDistance < max)
     {
-        y = 0;
+        setY(0);
     }
 }
 

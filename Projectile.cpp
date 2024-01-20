@@ -1,19 +1,24 @@
 // Projectile.cpp
 #include "Projectile.h"
 
-Projectile::Projectile(char sprite, int x, int y, uint8_t id, int speed)
-    : GameObject(sprite, x, y, id), speed(speed)
+Projectile::Projectile(char sprite, int x, int y, int speed)
+    : GameObject(sprite, x, y), speed(speed)
 {
     // Additional initialization if needed
+}
+
+int Projectile::getSpeed() const
+{
+    return speed;
 }
 
 void Projectile::update()
 {
     // Update logic for the projectile
     // For example, move the projectile based on its speed
-    x -= speed;
-    if (x < 0)
+    setX(getX() - getSpeed());
+    if (getX() < 0)
     {
-        x = 19;
+        setX(19);
     }
 }

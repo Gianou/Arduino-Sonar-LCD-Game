@@ -7,7 +7,7 @@
 class Player : public GameObject
 {
 public:
-    Player(char sprite, int x, int y, uint8_t id);
+    Player(char sprite, int x, int y);
 
     // Specific update method for player (optional)
     void update() override;

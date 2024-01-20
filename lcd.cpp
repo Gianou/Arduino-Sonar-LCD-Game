@@ -41,35 +41,10 @@ void LCD::drawGameObject(GameObject *obj)
     lcd.print(obj->getSprite());
 }
 
-void LCD::removeGameObject(uint8_t id)
-{
-    for (int i = 0; i < numGameObjects; ++i)
-    {
-        if (gameObjects[i]->getId() == id)
-        {
-            // Shift remaining elements to fill the gap
-            delete gameObjects[i];
-            for (int j = i; j < numGameObjects - 1; ++j)
-            {
-                gameObjects[j] = gameObjects[j + 1];
-            }
-            gameObjects[numGameObjects - 1] = nullptr;
-            numGameObjects--;
-            break;
-        }
-    }
-}
-
 void LCD::updateGameObjects()
 {
     // Flag to check if there's a collision
     bool collisionDetected = false;
-
-    // Update the Player
-    if (player != nullptr)
-    {
-        player->update();
-    }
 
     // Update logic for game objects
     for (int i = 0; i < numGameObjects; ++i)
@@ -99,6 +74,14 @@ void LCD::updateGameObjects()
         lcd.setCursor(player->getX(), player->getY());
         lcd.print("X");
         delay(1000);
+    }
+    else
+    {
+        // Update the Player
+        if (player != nullptr)
+        {
+            player->update();
+        }
     }
 }
 

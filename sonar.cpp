@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "sonar.h"
+#include "Sonar.h"
 
 Sonar::Sonar(int trigPin, int echoPin, int maxDistance)
     : trigPin(trigPin), echoPin(echoPin), maxDistance(maxDistance), timeOut(maxDistance * 60), soundVelocity(340)

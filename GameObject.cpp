@@ -1,13 +1,10 @@
 // GameObject.cpp
 #include "GameObject.h"
 
-GameObject::GameObject(char sprite, int x, int y, uint8_t id)
-    : sprite(sprite), x(x), y(y), id(id), isPlayer(false) {}
+GameObject::GameObject(char sprite, int x, int y)
+    : sprite(sprite), x(x), y(y) {}
 
-GameObject::GameObject(char sprite, int x, int y, uint8_t id, bool isPlayer)
-    : sprite(sprite), x(x), y(y), id(id), isPlayer(isPlayer) {}
-
-GameObject::GameObject() : sprite(' '), x(0), y(0), id(0), isPlayer(false) {}
+GameObject::GameObject() : sprite(' '), x(0), y(0) {}
 
 char GameObject::getSprite() const
 {
@@ -24,14 +21,19 @@ int GameObject::getY() const
     return y;
 }
 
-uint8_t GameObject::getId() const
+void GameObject::setSprite(char newSprite)
 {
-    return id;
+    sprite = newSprite;
 }
 
-bool GameObject::getIsPlayer() const
+void GameObject::setX(int newX)
 {
-    return isPlayer;
+    x = newX;
+}
+
+void GameObject::setY(int newY)
+{
+    y = newY;
 }
 
 void GameObject::update()
