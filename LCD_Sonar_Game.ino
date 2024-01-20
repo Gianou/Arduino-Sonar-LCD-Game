@@ -26,17 +26,17 @@ void setup()
 
   mySonar.begin();
   myLCD.begin();
-  // myLCD.addGameObject(&player);
   myLCD.setPlayer(&player);
   myLCD.addGameObject(&projectile1);
-  // myLCD.addGameObject(&projectile2);
+  myLCD.addGameObject(&projectile2);
 }
 
 void loop()
 {
+  myLCD.drawScreen();
   float distance = mySonar.getDistance();
   player.setGlobalDistance(distance); // Could be done in a looser way
   myLCD.updateGameObjects();
-  myLCD.drawScreen();
+
   delay(100);
 }

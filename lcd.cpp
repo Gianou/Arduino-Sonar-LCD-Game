@@ -65,40 +65,40 @@ void LCD::updateGameObjects()
     // Flag to check if there's a collision
     bool collisionDetected = false;
 
+    // Update the Player
+    if (player != nullptr)
+    {
+        player->update();
+    }
+
     // Update logic for game objects
     for (int i = 0; i < numGameObjects; ++i)
     {
-        gameObjects[i]->update();
-        Serial.print(" X : ");
-        Serial.println(gameObjects[i]->getX());
-        Serial.print(" Y : ");
-        Serial.println(gameObjects[i]->getY());
 
         // Check for collision with Player
         if (gameObjects[i]->getX() == 0 && gameObjects[i]->getY() == player->getY())
         {
+            Serial.print(i);
             Serial.println("Collision detected!");
             Serial.print(" X : ");
             Serial.println(gameObjects[i]->getX());
             Serial.print(" Y : ");
             Serial.println(gameObjects[i]->getY());
             collisionDetected = true;
-            break; // Break out of the loop after detecting a collision
+            // break; // Break out of the loop after detecting a collision
         }
+
+        gameObjects[i]->update();
     }
 
     // Print "GAME OVER" message if a collision is detected
     if (collisionDetected)
     {
-        lcd.setCursor(0, 0);
+        lcd.setCursor(5, 1);
         lcd.print("GAME OVER");
+        lcd.setCursor(player->getX(), player->getY());
+        lcd.print("X");
         delay(1000);
-    }
-
-    // Update the Player
-    if (player != nullptr)
-    {
-        player->update();
     }
 }
 
