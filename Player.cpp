@@ -8,6 +8,11 @@ Player::Player(char sprite, int x, int y, uint8_t id) : GameObject(sprite, x, y,
 void Player::update()
 {
     int max = 40;
+    if (globalDistance == 0)
+    {
+        return;
+    }
+
     if (globalDistance < max / 4)
     {
         y = 3;
