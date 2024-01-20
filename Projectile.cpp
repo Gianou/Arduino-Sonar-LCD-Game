@@ -20,5 +20,6 @@ void Projectile::update()
     if (getX() < 0)
     {
         setX(19);
+        setY(random(4));
     }
 }

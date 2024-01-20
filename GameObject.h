@@ -4,7 +4,7 @@
 
 #include <Arduino.h>
 
-const int MAX_GAME_OBJECTS = 10;
+const int MAX_GAME_OBJECTS = 8;
 
 class GameObject
 {

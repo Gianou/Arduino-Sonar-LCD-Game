@@ -14,11 +14,14 @@
 Sonar mySonar(sonarTrigPin, sonarEchoPin, MAX_DISTANCE);
 LCD myLCD(address, col, line);
 Player player('0', 0, 3);
-Projectile projectile1('1', 19, 0, 1); // Example values, adjust as needed
-Projectile projectile2('2', 19, 3, 1); // Example values, adjust as needed
-Projectile projectile3('3', 19, 3, 1); // Example values, adjust as needed
-Projectile projectile4('4', 19, 3, 1); // Example values, adjust as needed
-Projectile projectile5('5', 19, 3, 1); // Example values, adjust as needed
+Projectile projectile1('-', 19, 0, 1); // Example values, adjust as needed
+Projectile projectile2('-', 9, 2, 1);  // Example values, adjust as needed
+Projectile projectile3('-', 19, 1, 1); // Example values, adjust as needed
+Projectile projectile4('-', 19, 3, 1); // Example values, adjust as needed
+Projectile projectile5('-', 19, 2, 1); // Example values, adjust as needed
+Projectile projectile6('-', 19, 1, 1); // Example values, adjust as needed
+Projectile projectile7('-', 19, 3, 1); // Example values, adjust as needed
+Projectile projectile8('-', 19, 2, 1); // Example values, adjust as needed
 
 void setup()
 {
@@ -30,6 +33,12 @@ void setup()
   myLCD.setPlayer(&player);
   myLCD.addGameObject(&projectile1);
   myLCD.addGameObject(&projectile2);
+  myLCD.addGameObject(&projectile3);
+  myLCD.addGameObject(&projectile4);
+  myLCD.addGameObject(&projectile5);
+  myLCD.addGameObject(&projectile6);
+  myLCD.addGameObject(&projectile7);
+  myLCD.addGameObject(&projectile8);
 }
 
 void loop()

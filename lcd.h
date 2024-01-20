@@ -15,16 +15,18 @@ public:
     void print(String message);
     void drawScreen();
     void drawGameObject(GameObject *obj);
-    void removeGameObject(uint8_t id);
     void updateGameObjects();
     void addGameObject(GameObject *gameObject);
     void setPlayer(Player *player); // New method to set the Player
+    void setNumGameObjects(int newNumbGameObjects);
 
 private:
     LiquidCrystal_I2C_Hangul lcd;
     GameObject *gameObjects[MAX_GAME_OBJECTS];
     int numGameObjects;
-    Player *player; // Pointer to Player
+    int currentAmountOfProjectiles;
+    int timeTracker;
+    Player *player;
 };
 
 #endif

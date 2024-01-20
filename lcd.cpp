@@ -1,7 +1,11 @@
 // LCD.cpp
 #include "LCD.h"
 
-LCD::LCD(int address, int columns, int rows) : lcd(address, columns, rows), numGameObjects(0), player(nullptr) {}
+LCD::LCD(int address, int columns, int rows) : lcd(address, columns, rows),
+                                               numGameObjects(2),
+                                               currentAmountOfProjectiles(0),
+                                               player(nullptr),
+                                               timeTracker(0) {}
 
 void LCD::begin()
 {
@@ -33,6 +37,10 @@ void LCD::drawScreen()
     {
         drawGameObject(player);
     }
+
+    // Draw timeTracker
+    lcd.setCursor(5, 1);
+    lcd.print(timeTracker);
 }
 
 void LCD::drawGameObject(GameObject *obj)
@@ -53,14 +61,7 @@ void LCD::updateGameObjects()
         // Check for collision with Player
         if (gameObjects[i]->getX() == 0 && gameObjects[i]->getY() == player->getY())
         {
-            Serial.print(i);
-            Serial.println("Collision detected!");
-            Serial.print(" X : ");
-            Serial.println(gameObjects[i]->getX());
-            Serial.print(" Y : ");
-            Serial.println(gameObjects[i]->getY());
             collisionDetected = true;
-            // break; // Break out of the loop after detecting a collision
         }
 
         gameObjects[i]->update();
@@ -83,14 +84,19 @@ void LCD::updateGameObjects()
             player->update();
         }
     }
+    timeTracker++;
+    if (timeTracker % 55 == 0 && numGameObjects < MAX_GAME_OBJECTS)
+    {
+        numGameObjects++;
+    }
 }
 
 void LCD::addGameObject(GameObject *obj)
 {
-    if (numGameObjects < MAX_GAME_OBJECTS)
+    if (currentAmountOfProjectiles < MAX_GAME_OBJECTS)
     {
-        gameObjects[numGameObjects] = obj;
-        numGameObjects++;
+        gameObjects[currentAmountOfProjectiles] = obj;
+        currentAmountOfProjectiles++;
     }
     // If the array is full, you may want to handle this case or provide feedback.
 }
@@ -98,4 +104,9 @@ void LCD::addGameObject(GameObject *obj)
 void LCD::setPlayer(Player *p)
 {
     player = p;
+}
+
+void LCD::setNumGameObjects(int newNumbGameObjects)
+{
+    numGameObjects = newNumbGameObjects;
 }
