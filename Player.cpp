@@ -1,9 +1,7 @@
 #include "Player.h"
 float Player::globalDistance = 0.0;
 
-Player::Player(char sprite, int x, int y, uint8_t id) : GameObject(sprite, x, y, id)
-{
-}
+Player::Player(char sprite, int x, int y, uint8_t id) : GameObject(sprite, x, y, id, true) {}
 
 void Player::update()
 {

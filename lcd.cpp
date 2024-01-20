@@ -1,13 +1,7 @@
+// LCD.cpp
 #include "LCD.h"
 
-LCD::LCD(int address, int columns, int rows) : lcd(address, columns, rows), numGameObjects(0)
-{
-    // Initialize gameObjects array elements
-    for (int i = 0; i < MAX_GAME_OBJECTS; ++i)
-    {
-        gameObjects[i] = nullptr;
-    }
-}
+LCD::LCD(int address, int columns, int rows) : lcd(address, columns, rows), numGameObjects(0), player(nullptr) {}
 
 void LCD::begin()
 {
@@ -33,6 +27,12 @@ void LCD::drawScreen()
     {
         drawGameObject(gameObjects[i]);
     }
+
+    // Draw the Player separately
+    if (player != nullptr)
+    {
+        drawGameObject(player);
+    }
 }
 
 void LCD::drawGameObject(GameObject *obj)
@@ -48,12 +48,12 @@ void LCD::removeGameObject(uint8_t id)
         if (gameObjects[i]->getId() == id)
         {
             // Shift remaining elements to fill the gap
+            delete gameObjects[i];
             for (int j = i; j < numGameObjects - 1; ++j)
             {
                 gameObjects[j] = gameObjects[j + 1];
             }
-            delete gameObjects[numGameObjects - 1];    // Delete the removed object
-            gameObjects[numGameObjects - 1] = nullptr; // Set the last element to nullptr
+            gameObjects[numGameObjects - 1] = nullptr;
             numGameObjects--;
             break;
         }
@@ -62,10 +62,43 @@ void LCD::removeGameObject(uint8_t id)
 
 void LCD::updateGameObjects()
 {
+    // Flag to check if there's a collision
+    bool collisionDetected = false;
+
     // Update logic for game objects
     for (int i = 0; i < numGameObjects; ++i)
     {
         gameObjects[i]->update();
+        Serial.print(" X : ");
+        Serial.println(gameObjects[i]->getX());
+        Serial.print(" Y : ");
+        Serial.println(gameObjects[i]->getY());
+
+        // Check for collision with Player
+        if (gameObjects[i]->getX() == 0 && gameObjects[i]->getY() == player->getY())
+        {
+            Serial.println("Collision detected!");
+            Serial.print(" X : ");
+            Serial.println(gameObjects[i]->getX());
+            Serial.print(" Y : ");
+            Serial.println(gameObjects[i]->getY());
+            collisionDetected = true;
+            break; // Break out of the loop after detecting a collision
+        }
+    }
+
+    // Print "GAME OVER" message if a collision is detected
+    if (collisionDetected)
+    {
+        lcd.setCursor(0, 0);
+        lcd.print("GAME OVER");
+        delay(1000);
+    }
+
+    // Update the Player
+    if (player != nullptr)
+    {
+        player->update();
     }
 }
 
@@ -77,4 +110,9 @@ void LCD::addGameObject(GameObject *obj)
         numGameObjects++;
     }
     // If the array is full, you may want to handle this case or provide feedback.
+}
+
+void LCD::setPlayer(Player *p)
+{
+    player = p;
 }
