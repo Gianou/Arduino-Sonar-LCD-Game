@@ -2,10 +2,19 @@
 #include "LCD.h"
 
 LCD::LCD(int address, int columns, int rows) : lcd(address, columns, rows),
-                                               numGameObjects(2),
-                                               currentAmountOfProjectiles(0),
+                                               amountOfSpawnedProjectiles(2),
+                                               amountOfLoadedProjectiles(0),
                                                player(nullptr),
-                                               timeTracker(0) {}
+                                               score(0),
+                                               playerSprite{
+                                                   0b01000,
+                                                   0b11100,
+                                                   0b11111,
+                                                   0b01000,
+                                                   0b11111,
+                                                   0b11100,
+                                                   0b01000,
+                                                   0b00000} {}
 
 void LCD::begin()
 {
@@ -14,20 +23,15 @@ void LCD::begin()
     lcd.print("LCD started.");
     delay(3000);
     lcd.clear();
-}
-
-void LCD::print(String message)
-{
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print(message);
+    // Upload the custom heart character
+    lcd.createChar(0, playerSprite);
 }
 
 void LCD::drawScreen()
 {
     lcd.clear();
     // Call draw on all game objects
-    for (int i = 0; i < numGameObjects; ++i)
+    for (int i = 0; i < amountOfSpawnedProjectiles; ++i)
     {
         drawGameObject(gameObjects[i]);
     }
@@ -35,12 +39,14 @@ void LCD::drawScreen()
     // Draw the Player separately
     if (player != nullptr)
     {
-        drawGameObject(player);
+        drawPlayer(player);
     }
 
-    // Draw timeTracker
+    // Draw score
     lcd.setCursor(15, 0);
-    lcd.print(timeTracker);
+    lcd.print(score);
+
+    lcd.setCursor(10, 2);
 }
 
 void LCD::drawGameObject(GameObject *obj)
@@ -49,15 +55,20 @@ void LCD::drawGameObject(GameObject *obj)
     lcd.print(obj->getSprite());
 }
 
+void LCD::drawPlayer(Player *player)
+{
+    lcd.setCursor(player->getX(), player->getY());
+    lcd.write(0);
+}
+
 void LCD::updateGameObjects()
 {
     // Flag to check if there's a collision
     bool collisionDetected = false;
 
     // Update logic for game objects
-    for (int i = 0; i < numGameObjects; ++i)
+    for (int i = 0; i < amountOfSpawnedProjectiles; ++i)
     {
-
         // Check for collision with Player
         if (gameObjects[i]->getX() == 0 && gameObjects[i]->getY() == player->getY())
         {
@@ -76,8 +87,8 @@ void LCD::updateGameObjects()
         lcd.print("X");
         delay(3000);
         // reset
-        timeTracker = 0;
-        numGameObjects = 2;
+        score = 0;
+        amountOfSpawnedProjectiles = 2;
     }
     else
     {
@@ -87,19 +98,23 @@ void LCD::updateGameObjects()
             player->update();
         }
     }
-    timeTracker++;
-    if (timeTracker % 55 == 0 && numGameObjects < MAX_GAME_OBJECTS)
+
+    // Score increment to keep track of the frames elapsed in the game
+    score++;
+
+    // "Spawn" new projectiles
+    if (score % 55 == 0 && amountOfSpawnedProjectiles < MAX_GAME_OBJECTS)
     {
-        numGameObjects++;
+        amountOfSpawnedProjectiles++;
     }
 }
 
 void LCD::addGameObject(GameObject *obj)
 {
-    if (currentAmountOfProjectiles < MAX_GAME_OBJECTS)
+    if (amountOfLoadedProjectiles < MAX_GAME_OBJECTS)
     {
-        gameObjects[currentAmountOfProjectiles] = obj;
-        currentAmountOfProjectiles++;
+        gameObjects[amountOfLoadedProjectiles] = obj;
+        amountOfLoadedProjectiles++;
     }
     // If the array is full, you may want to handle this case or provide feedback.
 }
@@ -109,7 +124,7 @@ void LCD::setPlayer(Player *p)
     player = p;
 }
 
-void LCD::setNumGameObjects(int newNumbGameObjects)
+void LCD::setAmountOfSpawnedProjectiles(int newNumbGameObjects)
 {
-    numGameObjects = newNumbGameObjects;
+    amountOfSpawnedProjectiles = newNumbGameObjects;
 }
