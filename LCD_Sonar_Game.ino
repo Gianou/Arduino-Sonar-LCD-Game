@@ -16,14 +16,16 @@
 Sonar mySonar(sonarTrigPin, sonarEchoPin, MAX_DISTANCE);
 LCD myLCD(address, col, line);
 Player player('0', 0, 3);
-Projectile projectile1('-', 19, 0, 1);
-Projectile projectile2('-', 9, 2, 1);
-Projectile projectile3('-', 19, 1, 1);
-Projectile projectile4('-', 19, 3, 1);
-Projectile projectile5('-', 19, 2, 1);
-Projectile projectile6('-', 19, 1, 1);
-Projectile projectile7('-', 19, 3, 1);
-Projectile projectile8('-', 19, 2, 1);
+
+Projectile projectiles[] = {
+    Projectile('-', 19, 0, 1),
+    Projectile('-', 9, 2, 1),
+    Projectile('-', 19, 1, 1),
+    Projectile('-', 19, 3, 1),
+    Projectile('-', 19, 2, 1),
+    Projectile('-', 19, 1, 1),
+    Projectile('-', 19, 3, 1),
+    Projectile('-', 19, 2, 1)};
 
 void setup()
 {
@@ -33,14 +35,11 @@ void setup()
   mySonar.begin();
   myLCD.begin();
   myLCD.setPlayer(&player);
-  myLCD.addGameObject(&projectile1);
-  myLCD.addGameObject(&projectile2);
-  myLCD.addGameObject(&projectile3);
-  myLCD.addGameObject(&projectile4);
-  myLCD.addGameObject(&projectile5);
-  myLCD.addGameObject(&projectile6);
-  myLCD.addGameObject(&projectile7);
-  myLCD.addGameObject(&projectile8);
+  // Create an array of pointers to Projectile
+  Projectile *projectilePointers[] = {&projectiles[0], &projectiles[1], &projectiles[2], &projectiles[3], &projectiles[4], &projectiles[5], &projectiles[6], &projectiles[7]};
+
+  // Pass the array of pointers to the setProjectiles function
+  myLCD.setProjectiles(projectilePointers);
 }
 
 void loop()

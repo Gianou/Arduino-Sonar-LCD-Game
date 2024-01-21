@@ -6,6 +6,7 @@
 #include <LiquidCrystal_I2C_Hangul.h>
 #include "GameObject.h"
 #include "Player.h"
+#include "Projectile.h"
 
 class LCD
 {
@@ -16,13 +17,13 @@ public:
     void drawGameObject(GameObject *obj);
     void drawPlayer(Player *player);
     void updateGameObjects();
-    void addGameObject(GameObject *gameObject);
     void setPlayer(Player *player); // New method to set the Player
+    void setProjectiles(Projectile *newProjectiles[]);
     void setAmountOfSpawnedProjectiles(int newNumbGameObjects);
 
 private:
     LiquidCrystal_I2C_Hangul lcd;
-    GameObject *gameObjects[MAX_GAME_OBJECTS];
+    Projectile *projectiles[MAX_GAME_OBJECTS];
     int amountOfSpawnedProjectiles;
     int amountOfLoadedProjectiles;
     int score;

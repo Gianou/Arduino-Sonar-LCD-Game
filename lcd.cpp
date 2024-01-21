@@ -14,7 +14,9 @@ LCD::LCD(int address, int columns, int rows) : lcd(address, columns, rows),
                                                    0b11111,
                                                    0b11100,
                                                    0b01000,
-                                                   0b00000} {}
+                                                   0b00000}
+{
+}
 
 void LCD::begin()
 {
@@ -23,7 +25,6 @@ void LCD::begin()
     lcd.print("LCD started.");
     delay(3000);
     lcd.clear();
-    // Upload the custom heart character
     lcd.createChar(0, playerSprite);
 }
 
@@ -33,7 +34,7 @@ void LCD::drawScreen()
     // Call draw on all game objects
     for (int i = 0; i < amountOfSpawnedProjectiles; ++i)
     {
-        drawGameObject(gameObjects[i]);
+        drawGameObject(projectiles[i]);
     }
 
     // Draw the Player separately
@@ -45,8 +46,6 @@ void LCD::drawScreen()
     // Draw score
     lcd.setCursor(15, 0);
     lcd.print(score);
-
-    lcd.setCursor(10, 2);
 }
 
 void LCD::drawGameObject(GameObject *obj)
@@ -70,12 +69,12 @@ void LCD::updateGameObjects()
     for (int i = 0; i < amountOfSpawnedProjectiles; ++i)
     {
         // Check for collision with Player
-        if (gameObjects[i]->getX() == 0 && gameObjects[i]->getY() == player->getY())
+        if (projectiles[i]->getX() == 0 && projectiles[i]->getY() == player->getY())
         {
             collisionDetected = true;
         }
 
-        gameObjects[i]->update();
+        projectiles[i]->update();
     }
 
     // Print "GAME OVER" message if a collision is detected
@@ -109,19 +108,17 @@ void LCD::updateGameObjects()
     }
 }
 
-void LCD::addGameObject(GameObject *obj)
-{
-    if (amountOfLoadedProjectiles < MAX_GAME_OBJECTS)
-    {
-        gameObjects[amountOfLoadedProjectiles] = obj;
-        amountOfLoadedProjectiles++;
-    }
-    // If the array is full, you may want to handle this case or provide feedback.
-}
-
 void LCD::setPlayer(Player *p)
 {
     player = p;
+}
+
+void LCD::setProjectiles(Projectile *newProjectiles[])
+{
+    for (int i = 0; i < MAX_GAME_OBJECTS; ++i)
+    {
+        projectiles[i] = newProjectiles[i];
+    }
 }
 
 void LCD::setAmountOfSpawnedProjectiles(int newNumbGameObjects)
