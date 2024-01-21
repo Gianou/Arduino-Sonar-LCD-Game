@@ -1,7 +1,22 @@
 # LCD Sonar Game
 
-This Arduino project is a simple game that uses an Arduino Uno, an HC-SR04 ultrasonic sensor (sonar), and a 2004A LCD with I2C interface to create an interactive experience.
-The player controls a character on the LCD screen using the ultrasonic sensor, and their goal is to avoid incoming projectiles.
+
+In the context of the IoT Experimental Project from Haaga-Helia University of Applied Science,
+we, students, were provided with the following components to start learning about wiring and Arduino programming:
+- Arduino Uno
+- HC-SR04 Ultrasonic Sensor (Sonar)
+- 2004A LCD with I2C Interface (20x4)  
+
+And so, I challenged myself to make a game out of those.
+
+## Gameplay:
+
+- Use the HC-SR04 Ultrasonic Sensor to control the Ship on the LCD screen.
+- The Ship changes lane according to the distance between your hand and the sensor.
+- Avoid collisions with incoming asteroids.
+- Your score is the distance you travel, it is displayed on the top right of the screen.
+- The game end when the Ship collides with an asteroid.
+- The will automatically restart after a while.
 
 ## Components:
 
@@ -29,12 +44,5 @@ The player controls a character on the LCD screen using the ultrasonic sensor, a
 - Connect the 2004A I2C LCD VCC pin to Arduino 5V.
 - Connect the 2004A I2C LCD GND pin to Arduino GND.
 
-## Gameplay:
 
-- Use the HC-SR04 Ultrasonic Sensor to control the Ship on the LCD screen.
-- The Ship changes lane according to the distance between your hand and the sensor.
-- Avoid collisions with incoming asteroids.
-- Your score is the distance you travel, it is displayed on the top right of the screen.
-- The game end when the Ship collides with an asteroid.
-- The will automatically restart after a while.
 
